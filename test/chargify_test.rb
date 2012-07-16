@@ -306,6 +306,14 @@ class ChargifyTest < Test::Unit::TestCase
       subscription.product.id.should == 354
     end
 
+    should "migrate a subscription from one product to another by handle" do
+      stub_post "https://OU812:x@pengwynn.chargify.com/subscriptions/123/migrations.json", "migrate_subscription.json"
+      
+      subscription = @client.migrate_subscription_by_handle(123, 'plan2');
+      subscription.success?.should == true
+      subscription.product.handle.should == 'plan2'
+    end
+
     should "adjust a subscription" do
       @client.expects(:post).with("/subscriptions/123/adjustments.json", :body => {:adjustment => {}}).
         returns(Hashie::Mash.new(:adjustment => {}, :code => 201))

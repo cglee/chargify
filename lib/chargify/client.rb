@@ -144,6 +144,13 @@ module Chargify
       (response.subscription || {}).update(:success? => success)
     end
 
+    def migrate_subscription_by_handle(sub_id, product_handle)
+      raw_response = self.class.post("/subscriptions/#{sub_id}/migrations.json", :body => {:product_handle => product_handle}.to_json)
+      success      = true if raw_response.code == 200
+      response     = Hashie::Mash.new(raw_response)
+      (response.subscription || {}).update(:success? => success)
+    end
+
     def adjust_subscription(sub_id, attributes = {})
       raw_response = post("/subscriptions/#{sub_id}/adjustments.json",
                           :body => { :adjustment => attributes })
