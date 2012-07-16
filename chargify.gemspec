@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-require File.dirname(__FILE__) + '/lib/chargify.rb'
+require File.expand_path('../lib/version', __FILE__)
 
 Gem::Specification.new do |s|
   s.name = %q{chargify}
-  s.version = Chargify::VERSION.dup
+  s.version = Chargify::VERSION
   s.authors = ["Wynn Netherland", "Nash Kabbara"]
   s.email = %q{wynn.netherland@gmail.com}
   s.homepage = %q{http://github.com/pengwynn/chargify}
